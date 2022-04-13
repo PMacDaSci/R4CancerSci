@@ -99,7 +99,7 @@
 <h4 id="learning-objectives">Learning objectives</h4>
 <ul>
 <li>Describe the main panes in RStudio</li>
-<li>Edit a precreated report using R</li>
+<li>Generate and edit an R report</li>
 <li>Import tabular data into R</li>
 <li>Inspect data for missing values</li>
 </ul>
@@ -276,13 +276,14 @@ able to explain what each line of the code does.</p>
 <p><a href="data:text/x-markdown;base64,LS0tCnRpdGxlOiAiUHJvdGVpbiBsZXZlbHMgaW4gYnJlYXN0IGNhbmNlciBjZWxscyB0cmVhdGVkIHdpdGggdGFtb3hpZmVuIgphdXRob3I6ICJNYXJpYSBEb3lsZSIKb3V0cHV0OiBodG1sX2RvY3VtZW50Ci0tLQoKIyMgSW50cm9kdWN0aW9uCgpXaGljaCBwcm90ZWlucyBjaGFuZ2UgaW4gYWJ1bmRhbmNlIGluIHRoZSBicmVhc3QgY2FuY2VyIGNlbGwgbGluZSwgTUNGLTcsIHdpdGggdGFtb3hpZmVuIHRyZWF0bWVudD8gSG93IGRvIHRoZWlyIGxldmVscyBjaGFuZ2Ugd2l0aCB0cmVhdG1lbnQgdGltZT8gQW5zd2VyaW5nIHRoZXNlIHF1ZXN0aW9ucyAoYXQgYSBoaWdoIGxldmVsKSBpcyB0aGUgZm9jdXMgb2YgdGhpcyBhbmFseXNpcy4KCiMjIyBQYWNrYWdlcwoKV2Ugd2lsbCB1c2UgdGhlICoqdGlkeXZlcnNlKiogY29sbGVjdGlvbiBvZiBwYWNrYWdlcyBmb3IgZGF0YSBpbXBvcnQsIHdyYW5nbGluZyBhbmQgdmlzdWFsaXphdGlvbi4KCmBgYHtyIGxvYWQtcGFja2FnZXMsIHdhcm5pbmc9RkFMU0UsIG1lc3NhZ2U9RkFMU0V9CmxpYnJhcnkodGlkeXZlcnNlKQpgYGAKCiMjIyBEYXRhCgpUaGUgZGF0YSB3ZSdyZSB1c2luZyB3YXMgZ2VuZXJhdGVkIGJ5IENSVUsgQ0kgc2NpZW50aXN0cyAoW1BhcGFjaHJpc3RvdSBfZXQgYWwuXywgTmF0dXJlIENvbW11bmljYXRpb25zIDk6MjMxMSwgMjAxOF0oaHR0cHM6Ly9wdWJtZWQubmNiaS5ubG0ubmloLmdvdi8yOTg5OTM1MykpLgpJdCBpcyB0aGUgYWJ1bmRhbmNlIG9mIHByb3RlaW5zIGluIGEgYnJlYXN0IGNhbmNlciBjZWxsIGxpbmUgKE1DRi03KSBhdAp2YXJpb3VzIHRpbWUgcG9pbnRzIGFmdGVyIHRyZWF0bWVudCB3aXRoIHRoZSBkcnVnIHRhbW94aWZlbiwgbWVhc3VyZWQgdXNpbmcgbWFzcyBzcGVjdHJvbWV0cnkuIEluIHRoZSBjaHVuayBiZWxvdyB3ZSBpbXBvcnQgdGhlIEV4Y2VsIGZpbGUgY29udGFpbmluZyB0aGUgZGF0YSwgc2tpcHBpbmcgdGhlIGZpcnN0IGhlYWRlciByb3cuCgpgYGB7ciBtZXNzYWdlPUZBTFNFfQpwcm90ZWluX2xldmVscyA8LSByZWFkX2NzdigiaHR0cHM6Ly96ZW5vZG8ub3JnL3JlY29yZC82NDUwMTQ0L2ZpbGVzLzQxNDY3XzIwMThfNDYxOV9NT0VTTTExX0VTTS5jc3YiLCBza2lwID0gMSkKYGBgCgojIyBQcm90ZWluIGxldmVscyBhZnRlciB0cmVhdG1lbnQgd2l0aCB0YW1veGlmZW4KCkxldCdzIGNyZWF0ZSBhIGRhdGEgdmlzdWFsaXNhdGlvbiB0aGF0IGRpc3BsYXlzIHRoZSBsZXZlbHMgZm9yIHByb3RlaW5zIHRoYXQgYXJlIGRlY3JlYXNlZCAobG9nMmZjIDwgLTAuNzUpIGluIHRoZSAyNGggdGFtb3hpZmVuIHRyZWF0ZWQgc2FtcGxlIHZlcnN1cyBjb250cm9sICh2ZWgpLgoKYGBge3IgcGxvdC1wcm90ZWluLWxldmVscywgZmlnLndpZHRoPTEwLCBmaWcuaGVpZ2h0PTYsIG1lc3NhZ2U9RkFMU0V9CnByb3RlaW5fbGV2ZWxzICU+JQogIGZpbHRlcihgbG9nMkZDKDI0aC92ZWgpYCA8IC0wLjc1KSAlPiUKICBzZWxlY3QoYWNjZXNzaW9uID0gYFVuaXByb3QgQWNjZXNzaW9uYCwgZ2VuZSA9IGBHZW5lIE5hbWVgLCB2ZWhpY2xlLnJlcDAxOnRhbS4yNGgucmVwMDQpICU+JQogIHBpdm90X2xvbmdlcih2ZWhpY2xlLnJlcDAxOnRhbS4yNGgucmVwMDQsIG5hbWVzX3RvID0gInNhbXBsZSIsIHZhbHVlc190byA9ICJwcm90ZWluX2xldmVsIikgJT4lCiAgbXV0YXRlKHNhbXBsZSA9IHN0cl9yZXBsYWNlKHNhbXBsZSwgInZlaGljbGUiLCAidmVoaWNsZS4yNGgiKSkgJT4lCiAgc2VwYXJhdGUoc2FtcGxlLCBpbnRvID0gYygidHJlYXRtZW50IiwgInRpbWUiLCAicmVwbGljYXRlIikpICU+JQogIG11dGF0ZShncm91cCA9IHN0cl9zdWIodHJlYXRtZW50LCAxLCAzKSkgJT4lCiAgbXV0YXRlKGdyb3VwID0gc3RyX2MoZ3JvdXAsIHRpbWUpKSAlPiUKICBtdXRhdGUoZ3JvdXAgPSBhc19mYWN0b3IoZ3JvdXApKSAlPiUKICBnZ3Bsb3QobWFwcGluZyA9IGFlcyh4ID0gZ3JvdXAsIHkgPSBwcm90ZWluX2xldmVsLCBmaWxsID0gZ3JvdXApKSArCiAgZ2VvbV9ib3hwbG90KCkgKwogIGdlb21faml0dGVyKHdpZHRoID0gMC4xNSkgKwogIGZhY2V0X3dyYXAodmFycyhnZW5lKSwgc2NhbGVzID0gImZyZWVfeSIsIG5jb2wgPSAzKSArCiAgbGFicygKICAgIHRpdGxlID0gIlByb3RlaW4gbGV2ZWxzIGluIE1DRi03IHRyZWF0ZWQgd2l0aCB0YW1veGlmZW4iLAogICAgeSA9ICJQcm90ZWluIGxldmVsIiwKICAgIHggPSAiIgogICkKYGBgCgoxLiBDbGljayBLbml0IHRvIGdlbmVyYXRlIGEgaHRtbCByZXBvcnQgY29udGFpbmluZyB0aGUgcGxvdC4gIAoyLiBXZSBjYW4gZWFzaWx5IGNoYW5nZSB3aGljaCBwcm90ZWlucyBhcmUgYmVpbmcgcGxvdHRlZCBieSBjaGFuZ2luZyB0aGUgdGhyZXNob2xkIHRoZSBjb2RlIGFib3ZlIGBmaWx0ZXJgcyBmb3IuIFRyeSBjaGFuZ2luZyB0aGUgZmlsdGVyIHRvIGA+IDAuNzVgICB0aGVuIEtuaXQgYWdhaW4uCgojIyBSZWZlcmVuY2VzCgoxLiAgQ2FuY2VyIFJlc2VhcmNoIFVLIENhbWJyaWRnZSBJbnN0aXR1dGUsIFVuaXZlcnNpdHkgb2YgQ2FtYnJpZGdlICJJbnRyb2R1Y3Rpb24gdG8gUiBmb3IgQ2FuY2VyIFNjaWVudGlzdHMiCjIuICBNaW5lIENldGlua2F5YS1SdW5kZWwgIkRhdGEgU2NpZW5jZSBpbiBhIEJveCIgCg==" download="example-report.Rmd">Download example-report.Rmd</a></p>
 <ul>
 <li>Download the example report (Rmd) file from the link above</li>
-<li>In your RStudio top menu go to File &gt; Open File and open the
+<li>In your RStudio top menu go to File &gt; Open File and open the Rmd
 file</li>
-<li>Click the Knit button at the top of the Editing pane to generate the
-report</li>
+<li>Click the Knit button and inspect the report in the Viewer pane (see
+below)</li>
 <li>Try out the exercise in the Rmd file to edit the file. Knit again to
-see the changes.</li>
+see the changes in the report.</li>
 </ul>
+<p><img src="images/rmarkdown.png" width="100%"></p>
 <p>As described in the <a href="https://r4ds.had.co.nz/r-markdown.html" class="external-link">R for Data Science
 book</a>, an R Markdown, or .Rmd, document contains three types of
 content:</p>
@@ -299,7 +300,8 @@ pressing Cmd/Ctrl + Shift + Enter. RStudio executes the code and
 displays the results inline with the code. When you knit the document, R
 Markdown executes all of the code chunks and creates a document
 (whichever you specify: HTML/PDF/Word) which includes the code and its
-output.</p>
+output. Here a HTML file will be generated in the folder where you have
+the example_report.Rmd file.</p>
 <p>Next we’ll play around with the R markdown file some more and explain
 some of the things you can see in it.</p>
 </div>
@@ -823,7 +825,6 @@ functionality</li>
 <li>How to read tabular data into R</li>
 <li>Missing values and how R handles these</li>
 </ul>
-<hr>
 </div>
 <div class="section level2">
 <h2 id="assignment">Assignment<a class="anchor" aria-label="anchor" href="#assignment"></a>
