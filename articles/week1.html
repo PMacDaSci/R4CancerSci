@@ -108,15 +108,14 @@
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
 <p>This is a ‘next-steps’ course, designed for follow-on practice with
-cancer datasets after completing DataCamp’s Introduction to the
-Tidyverse (or another general introductory R course). Therefore, we
-assume you know some R basics already, at least the content of the
-DataCamp course. <a href="https://r4ds.had.co.nz/index.html" class="external-link">R for Data
-Science book</a> is an excellent reference book if you want to look up
-anything you don’t recall or are not very familiar with. We also assume
-you know some reasons why learning R is good (as you’ve already started
-😄) but below are a list of reasons why learning R is useful and worth
-your time.</p>
+cancer datasets after completing DataCamp’s <a href="https://www.datacamp.com/courses/introduction-to-the-tidyverse" class="external-link">Introduction
+to the Tidyverse</a> (or another general introductory R course).
+Therefore, we assume you know some R basics already, at least the
+content of the DataCamp course. <a href="https://r4ds.had.co.nz/index.html" class="external-link">R for Data Science book</a> is
+an excellent reference book if you want to look up anything you don’t
+recall or are not very familiar with. We also assume you know some
+reasons why learning R is good (as you’ve already started 😄) but below
+are a list of reasons why learning R is useful and worth your time.</p>
 <div class="section level3">
 <h3 id="why-learn-r">Why learn R?<a class="anchor" aria-label="anchor" href="#why-learn-r"></a>
 </h3>
@@ -134,8 +133,7 @@ more.</p></li>
 <li><p>R can connect to spreadsheets, databases, and many other data
 formats, on your computer or on the web.</p></li>
 <li><p>R has a large and welcoming community - Thousands use R daily and
-many of them are willing to help you through websites such as Stack
-Overflow or the RStudio community.</p></li>
+many of them are willing to help you through websites such as <a href="https://stackoverflow.com/" class="external-link">Stack Overflow</a> or the <a href="https://community.rstudio.com/" class="external-link">RStudio community</a>.</p></li>
 <li><p>Not only is R free, but it is also open-source and
 cross-platform.</p></li>
 <li><p>R code is great for reproducibility. An increasing number of
@@ -143,15 +141,22 @@ journals and funding agencies expect analyses to be reproducible, so
 knowing R will give you an edge with these requirements.</p></li>
 <li>
 <p>R integrates with other tools to generate manuscripts from your
-code. This document (R Markdown, a .Rmd file) is a case in point.
-Information on creating R Markdown manuscripts for journals can be found
-<a href="https://bookdown.org/yihui/rmarkdown/journals.html#ref-R-rticles" class="external-link">here</a>
+code. This document (<a href="https://rmarkdown.rstudio.com/" class="external-link">R
+Markdown</a>, a .Rmd file) is a case in point. We will be using R
+Markdown in this course. Information on creating R Markdown manuscripts
+for journals can be found <a href="https://bookdown.org/yihui/rmarkdown/journals.html#ref-R-rticles" class="external-link">here</a>
 and in <a href="https://www.sciencedirect.com/science/article/pii/S2667145X21000171" class="external-link">this
-paper</a>.</p>
+paper</a>. Some examples of R Markdown in action:</p>
 <ul>
-<li>An example Rmd for figures for a Peter Mac bioinformatics paper can
-be found <a href="https://atlassian.petermac.org.au/bitbucket/projects/DAW/repos/multisamplevariantcalling/browse/plotting/PaperFigures.Rmd" class="external-link">here</a>.</li>
-<li>An example using Rmd files for a PhD thesis can be found <a href="https://masiraji.github.io/monashthesisdown/" class="external-link">here</a>.</li>
+<li><a href="https://sa-lee.github.io/thesis/preface.html" class="external-link">PhD
+thesis</a></li>
+<li>
+<a href="https://atlassian.petermac.org.au/bitbucket/projects/DAW/repos/multisamplevariantcalling/browse/plotting/PaperFigures.Rmd" class="external-link">Figures</a>
+for a Peter Mac bioinformatics paper</li>
+<li>
+<a href="http://oshlacklab.com/combes-organoid-paper/" class="external-link">Analysis
+results</a> using <a href="https://workflowr.github.io/workflowr/index.html" class="external-link">workflowr</a>
+(used by a few groups at Peter Mac to share/collaborate)</li>
 </ul>
 </li>
 </ul>
@@ -193,9 +198,9 @@ contains R commands and (ideally) comments to explain what the codes
 function is (as a documentation process).</p>
 <p>As well as R scripts, there are many types of RStudio document
 including <a href="https://r4ds.had.co.nz/r-markdown.html" class="external-link">R Markdown
-files</a>. We will use R Markdown in the teaching of this course so you
-can learn how to generate reports summarising your analysis that you can
-use when collaborating with others.</p>
+files</a>. We will use R Markdown in the teaching of this course. This
+is so you can learn how to generate reports summarising your analysis
+for collaborating or sharing your work with others.</p>
 </div>
 <div class="section level3">
 <h3 id="console">Console<a class="anchor" aria-label="anchor" href="#console"></a>
@@ -296,10 +301,10 @@ see the changes in the report.</li>
 book</a>, an R Markdown, or .Rmd, document contains three types of
 content:</p>
 <ul>
-<li>An (optional) YAML header surrounded by —s.</li>
-<li>Chunks of R code surrounded by ```.</li>
+<li>An (optional) YAML header surrounded by <code>---</code>.</li>
+<li>Chunks of R code surrounded by <code>```</code>.</li>
 <li>Text mixed with simple text formatting like <code># heading</code>
-and <code>_italics_</code>.</li>
+and <code>**bold**</code>.</li>
 </ul>
 <p>When you open an .Rmd, you get a notebook interface where code and
 output are interleaved. You can run each code chunk by clicking the Run
@@ -808,7 +813,7 @@ home folder. You can explicitly set your working directory using
 However, the path will be specific to your computer and won’t work if
 you have it in a script that you share with someone else.</p>
 <p>Alternatively (and better) you can create an RStudio Project as
-described in more detail<a href="https://r4ds.had.co.nz/workflow-projects.html#rstudio-projects" class="external-link">here</a>
+described in more detail <a href="https://r4ds.had.co.nz/workflow-projects.html#rstudio-projects" class="external-link">here</a>
 to keep track of and set the working directory.</p>
 <p>Create an RStudio project for this course (File &gt; New Project &gt;
 New Directory &gt; Project Type: New Project &gt; Name: r-skills-course)
@@ -827,9 +832,7 @@ file is located.</p>
 <ul>
 <li>The RStudio environment and the functions associated with each
 pane</li>
-<li>Generating a visualisation and report using R</li>
-<li>How to install and use packages that extend R’s basic
-functionality</li>
+<li>Generating a visualisation and R Markdown report</li>
 <li>How to read tabular data into R</li>
 <li>Missing values and how R handles these</li>
 </ul>
