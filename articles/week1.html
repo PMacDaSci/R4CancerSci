@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/R4CancerSci/R4CancerSci" class="external-link">
+  <a href="https://github.com/pmacdasci/R4CancerSci" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
@@ -272,7 +272,11 @@ new packages.</p>
 <p>The Help tab is a <em>massively useful</em> tab which enables you to
 search R help index to get help pages on R functions and provide example
 code to help you use them in your R scripts.</p>
-<hr>
+</div>
+<div class="section level3">
+<h3 id="the-viewer-tab-is-where-we-can-preview-an-r-markdown-report-after-we-knit-more-on-that-shortly-">The Viewer tab is where we can preview an R markdown report after we
+Knit, more on that shortly.<a class="anchor" aria-label="anchor" href="#the-viewer-tab-is-where-we-can-preview-an-r-markdown-report-after-we-knit-more-on-that-shortly-"></a>
+</h3>
 </div>
 </div>
 <div class="section level2">
@@ -314,9 +318,10 @@ displays the results inline with the code. When you knit the document, R
 Markdown executes all of the code chunks and creates a document
 (whichever you specify: HTML/PDF/Word) which includes the code and its
 output. Here a HTML file will be generated in the folder where you have
-the example_report.Rmd file.</p>
-<p>Next we’ll play around with the R markdown file some more and explain
-some of the things you can see in it.</p>
+the example_report.Rmd file. To create an R Markdown file in RStudio you
+can use File &gt; New File &gt; R Markdown.</p>
+<p>Next we’ll play around with the example R Markdown file some more and
+explain some of the things you can see in it.</p>
 <div class="section level3">
 <h3 id="packages">Packages<a class="anchor" aria-label="anchor" href="#packages"></a>
 </h3>
@@ -331,7 +336,8 @@ transcriptomic analysis methods.</p>
 <p>You need to load a package using the
 <strong><code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code></strong> function in order to be able to
 use the functions and data sets that the package provides. We can load
-the core tidyverse packages in one go as follows.</p>
+the core tidyverse packages in one go, as you can see in the
+example_report.Rmd, as follows.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.1 ──</span></code></pre>
@@ -714,7 +720,9 @@ built-in <strong><code><a href="https://rdrr.io/r/base/summary.html" class="exte
 <span class="co">##   1.000   3.000   5.000   5.579   7.000  80.000     152</span></code></pre>
 <p>Note that several of the column names have multiple words separated
 by spaces. We have to use backticks ( <strong>`</strong> ) to refer to
-column names such as these.</p>
+column names such as these. Tip: if you have lots of columns with spaces
+or special characters you could use the popular janitor package’s <a href="https://albert-rapp.de/post/2022-01-12-janitor-showcase/" class="external-link">clean_names</a>
+function to format in a nicer way.</p>
 <p>We can create a scatter plot to see if there is any relationship
 between the age of the patient at diagnosis of breast cancer and the
 Nottingham prognostic index (whatever that is) using R’s built-in
@@ -781,9 +789,10 @@ here</a>.</p>
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">metabric</span><span class="op">$</span><span class="va">`Mutation Count`</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 152</span></code></pre>
 <p>Can you see why this works? <em>(hint: look at the output of
-<code>is.na(metabric$</code>Mutation Count<code>)</code>, use
-’<code><a href="https://rdrr.io/r/base/sum.html" class="external-link">?sum</a></code> to check what kind of vector <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code>
-expects and how it handles logical values)</em>.</p>
+<code>is.na(metabric$</code>Mutation Count<code>)</code>, use the help
+page which you can get by typing ’<code><a href="https://rdrr.io/r/base/sum.html" class="external-link">?sum</a></code> to check what kind
+of vector <code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code> expects and how it handles logical
+values)</em>.</p>
 <div class="section level3">
 <h3 id="working-directory">Working directory<a class="anchor" aria-label="anchor" href="#working-directory"></a>
 </h3>
@@ -794,11 +803,12 @@ located using a URL
 as it’s located on the web. If you have a file on your computer you can
 specify the path to where it is located. For example, if we paste the
 URL above into our web browser to download the file we can then import
-it from our computer using either the absolute path</p>
+it from our computer using the absolute path, which starts with
+<code>/</code>.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric_downloaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv</a></span><span class="op">(</span><span class="st">"/home/maria/Downloads/brca_metabric_clinical_data.tsv"</span><span class="op">)</span></code></pre></div>
 <p>Or if we were working inside the Downloads directory we could use the
-relative path:</p>
+relative path.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric_downloaded</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_tsv</a></span><span class="op">(</span><span class="st">"brca_metabric_clinical_data.tsv"</span><span class="op">)</span></code></pre></div>
 <p>The <strong><code><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd()</a></code></strong> function will tell you what

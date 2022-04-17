@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/R4CancerSci/R4CancerSci" class="external-link">
+  <a href="https://github.com/pmacdasci/R4CancerSci" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
@@ -609,9 +609,12 @@ each?</p>
 <span class="co">##                 40                 40                 40                 34 </span>
 <span class="co">##         TfL - Tube </span>
 <span class="co">##                 32</span></code></pre>
-<p>We’ll focus solely on rail use to start with.</p>
+<p>We’ll focus solely on rail use to start with. You should already have
+seen <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> in the Introduction to Tidyverse course and
+we will discuss it in more detail next week.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rail_use</span> <span class="op">&lt;-</span> <span class="va">transport_use</span><span class="op">[</span><span class="va">transport_use</span><span class="op">$</span><span class="va">transport_type</span> <span class="op">==</span> <span class="st">"National rail"</span>, <span class="op">]</span>
+<code class="sourceCode R"><span class="va">rail_use</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">transport_use</span>, <span class="va">transport_type</span> <span class="op">==</span> <span class="st">"National rail"</span><span class="op">)</span>
+
 <span class="va">rail_use</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 40 × 3</span></span>
 <span class="co">##    date                transport_type percentage</span>
@@ -750,12 +753,17 @@ these are supposed to be a restricted set of values and has used a
 colour scale to show them as if they were continuous. We need to tell R
 that these are categorical.</p>
 <p>R has a special type for categorical variables called a
-<strong>factor</strong>. You can read more about factors <a href="https://r4ds.had.co.nz/factors.html" class="external-link">here</a>. Let’s convert our
-tumour stage variable to a factor using the <code><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor()</a></code>
-function.</p>
+<strong>factor</strong>. You can read more about factors <a href="https://r4ds.had.co.nz/factors.html" class="external-link">here</a>. The other R main
+data types are numeric (numbers), character (text) and logical
+(TRUE/FALSE), which you can read more about in the R for Data Science
+section on vectors we mentioned before <a href="https://r4ds.had.co.nz/vectors.html?#important-types-of-atomic-vector" class="external-link">here</a>.
+Let’s convert our tumour stage variable to a factor using the
+<code><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor()</a></code> function. You should already have seen
+<code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> in the Introduction to Tidyverse course and we
+will discuss it in more detail next week.</p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span><span class="op">$</span><span class="va">Tumour_stage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">metabric</span><span class="op">$</span><span class="va">Tumour_stage</span><span class="op">)</span>
-<span class="va">metabric</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Patient_ID"</span>, <span class="st">"Tumour_stage"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, <span class="va">Tumour_stage</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 2</span></span>
 <span class="co">##    Patient_ID Tumour_stage</span>
 <span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>       </span>
