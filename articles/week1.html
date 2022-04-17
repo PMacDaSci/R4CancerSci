@@ -139,27 +139,22 @@ cross-platform.</p></li>
 <li><p>R code is great for reproducibility. An increasing number of
 journals and funding agencies expect analyses to be reproducible, so
 knowing R will give you an edge with these requirements.</p></li>
-<li>
-<p>R integrates with other tools to generate manuscripts from your
+<li><p>R integrates with other tools to generate manuscripts from your
 code. This document (<a href="https://rmarkdown.rstudio.com/" class="external-link">R
-Markdown</a>, a .Rmd file) is a case in point. We will be using R
-Markdown in this course. Information on creating R Markdown manuscripts
+Markdown</a>, a .Rmd file) is a case in point.</p></li>
+</ul>
+<div class="rmdblock">
+<p>
+We will be using R Markdown for the assignments in this course to help
+you learn how to use it. Information on creating R Markdown manuscripts
 for journals can be found <a href="https://bookdown.org/yihui/rmarkdown/journals.html#ref-R-rticles" class="external-link">here</a>
 and in <a href="https://www.sciencedirect.com/science/article/pii/S2667145X21000171" class="external-link">this
-paper</a>. Some examples of R Markdown in action:</p>
-<ul>
-<li><a href="https://sa-lee.github.io/thesis/preface.html" class="external-link">PhD
-thesis</a></li>
-<li>
-<a href="https://atlassian.petermac.org.au/bitbucket/projects/DAW/repos/multisamplevariantcalling/browse/plotting/PaperFigures.Rmd" class="external-link">Figures</a>
-for a Peter Mac bioinformatics paper</li>
-<li>
-<a href="http://oshlacklab.com/combes-organoid-paper/" class="external-link">Analysis
-results</a> using <a href="https://workflowr.github.io/workflowr/index.html" class="external-link">workflowr</a>
-(used by a few groups at Peter Mac to share/collaborate)</li>
-</ul>
-</li>
-</ul>
+paper</a>. Some examples of R Markdown in action: * <a href="https://sa-lee.github.io/thesis/preface.html" class="external-link">PhD thesis</a> * <a href="https://atlassian.petermac.org.au/bitbucket/projects/DAW/repos/multisamplevariantcalling/browse/plotting/PaperFigures.Rmd" class="external-link">Figures</a>
+for a Peter Mac bioinformatics paper * <a href="http://oshlacklab.com/combes-organoid-paper/" class="external-link">Analysis results</a>
+using <a href="https://workflowr.github.io/workflowr/index.html" class="external-link">workflowr</a>
+(used by a few groups at Peter Mac to share/collaborate)
+</p>
+</div>
 <hr>
 </div>
 </div>
@@ -722,7 +717,7 @@ built-in <strong><code><a href="https://rdrr.io/r/base/summary.html" class="exte
 by spaces. We have to use backticks ( <strong>`</strong> ) to refer to
 column names such as these. Tip: if you have lots of columns with spaces
 or special characters you could use the popular janitor package’s <a href="https://albert-rapp.de/post/2022-01-12-janitor-showcase/" class="external-link">clean_names</a>
-function to format in a nicer way.</p>
+function to format the column names in a nicer way.</p>
 <p>We can create a scatter plot to see if there is any relationship
 between the age of the patient at diagnosis of breast cancer and the
 Nottingham prognostic index (whatever that is) using R’s built-in
