@@ -98,8 +98,8 @@
 <blockquote>
 <h4 id="learning-objectives">Learning objectives</h4>
 <ul>
-<li>Learn the five key <strong>dplyr</strong> functions for manipulating
-your data
+<li>Recall the five key <strong>dplyr</strong> functions for
+manipulating your data
 <ul>
 <li>
 <strong><code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code></strong> for selecting a subset of
@@ -119,11 +119,13 @@ one of more columns to a single summary value</li>
 </ul>
 </li>
 <li>Chain operations together into a workflow using pipes</li>
-<li>Learn about faceting in ggplot2 to split your data into separate
+<li>Review faceting in ggplot2 to split your data into separate
 categories and create a series of sub-plots arranged in a grid</li>
 </ul>
 </blockquote>
 <hr>
+<p>In this session we review functions from the DataCamp Introduction to
+Tidyverse course in more detail.</p>
 <div class="section level2">
 <h2 id="data-manipulation-with-dplyr">Data manipulation with dplyr<a class="anchor" aria-label="anchor" href="#data-manipulation-with-dplyr"></a>
 </h2>
@@ -143,11 +145,11 @@ part of the tidyverse.</p>
 functions for manipulating tabular data in data frames or tibbles. We’re
 going to look at the key functions for filtering our data, modifying the
 contents and computing summary statistics.</p>
-<p>We’ll also introduce the pipe operator,
+<p>We’ll also use the pipe operator,
 <strong><code>%&gt;%</code></strong>, for chaining operations together
 into mini workflows in a way that makes for more readable and
 maintainable code.</p>
-<p>Finally, we’ll return to plotting and look at a powerful feature of
+<p>Finally, we’ll return to plotting and look at the powerful feature of
 ggplot2, <strong>faceting</strong>, that allows you to divide your plots
 into subplots by splitting the observations based on one or more
 categorical variables.</p>
@@ -176,40 +178,6 @@ operations work.</p>
 <span class="co">## <span style="color: #949494;">#   PR_status &lt;chr&gt;, HER2_status &lt;chr&gt;, HER2_status_measured_by_SNP6 &lt;chr&gt;,</span></span>
 <span class="co">## <span style="color: #949494;">#   PAM50 &lt;chr&gt;, `3-gene_classifier` &lt;chr&gt;, Nottingham_prognostic_index &lt;dbl&gt;,</span></span>
 <span class="co">## <span style="color: #949494;">#   Cellularity &lt;chr&gt;, Integrative_cluster &lt;chr&gt;, Mutation_count &lt;dbl&gt;, …</span></span></code></pre>
-<hr>
-</div>
-<div class="section level2">
-<h2 id="data-semantics">Data semantics<a class="anchor" aria-label="anchor" href="#data-semantics"></a>
-</h2>
-<p>We use the terms ‘observation’ and ‘variable’ a lot in this course.
-As a reminder from session 2, when we talk about an observation, we’re
-talking about a set of values measured for the same unit or thing,
-e.g. a person or a date, and when we talk about a variable we are really
-talking about the attribute that we are measuring or recording,
-e.g. height, temperature or expression value.</p>
-<p><strong>Observations are represented as rows</strong> in our data
-frames or tibbles, while the <strong>columns correspond to
-variables</strong>.</p>
-<div class="rmdblock">
-<p>
-From <strong>“Tidy Data”</strong> by <strong>Hadley Wickham</strong>, <a href="https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf" class="external-link"><em>The
-Journal of Statistical Software</em>, vol. 59, 2014</a>.
-</p>
-<p>
-A data set is a collection of <strong>values</strong>, usually either
-numbers (if quantitative) or character strings (if qualitative). Values
-are organised in two ways. Every value belongs to a variable and an
-observation.
-</p>
-<p>
-A <strong>variable</strong> contains all values that measure the same
-underlying attribute (like height, temperature, duration) across units.
-</p>
-<p>
-An <strong>observation</strong> contains all values measured on the same
-unit (like a person or a day) across attributes.
-</p>
-</div>
 <hr>
 </div>
 <div class="section level2">
@@ -287,20 +255,9 @@ observations for those patients who died of breast cancer we can use
 <p>Remember that the <strong><code>==</code></strong> operator tests for
 equality, i.e. is the value for <code>Vital_status</code> for each
 patient (observation) equal to “Died of Disease”.</p>
-<p>This filtering operation is equivalent to subsetting the rows based
-on a logical vector resulting from our comparison of vital status values
-with “Died of Disease”.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Vital_status</span> <span class="op">==</span> <span class="st">"Died of Disease"</span><span class="op">)</span>
-<span class="co"># is equivalent to</span>
-<span class="va">metabric</span><span class="op">[</span><span class="va">metabric</span><span class="op">$</span><span class="va">Vital_status</span> <span class="op">==</span> <span class="st">"Died of Disease"</span>, <span class="op">]</span></code></pre></div>
-<p>Both achieve the same result but the dplyr filter method is arguably
-a little easier to read. We haven’t had to write <code>metabric</code>
-twice for one thing; we just referred to the variable name as it is,
-unquoted and without any fuss.</p>
 <p>Let’s have a look at the various categories in the
 <code>Vital_status</code> variable.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">metabric</span><span class="op">$</span><span class="va">Vital_status</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## </span>
 <span class="co">##      Died of Disease Died of Other Causes               Living </span>
@@ -309,14 +266,14 @@ unquoted and without any fuss.</p>
 deceased patients regardless of whether they died of the disease or
 other causes, by filtering for those that don’t have the value
 “Living”.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">deceased</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Vital_status</span> <span class="op">!=</span> <span class="st">"Living"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1102</span></code></pre>
 <p>Another way of doing this is to specify which classes we are
 interested in and use the <strong><code>%in%</code></strong> operator to
 test which observations (rows) contain those values.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">deceased</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Vital_status</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Died of Disease"</span>, <span class="st">"Died of Other Causes"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1102</span></code></pre>
@@ -325,13 +282,10 @@ test which observations (rows) contain those values.</p>
 functions for operating on text or character strings. One such function,
 <strong><code><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_starts()</a></code></strong> could be used to find all
 <code>Vital_status</code> values that start with “Died”.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">deceased</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_starts</a></span><span class="op">(</span><span class="va">Vital_status</span>, <span class="st">"Died"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 1102</span></code></pre>
-<p>Note that <code><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_starts()</a></code> returns a logical vector - this
-is important since the filtering condition must evaluate to
-<code>TRUE</code> or <code>FALSE</code> values for each row.</p>
 <p>Unsurprisingly there is an equivalent function,
 <code><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_ends()</a></code>, for matching the end of text (character) values
 and <code><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect()</a></code> is another useful function that determines
@@ -343,7 +297,7 @@ of this course.</p>
 filtering of all. We don’t have any logical variables in our METABRIC
 data set so we’ll create one from the binary
 <code>Survival_status</code> variable to use as an example.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create a new logical variable called 'Deceased'</span>
 <span class="va">metabric</span><span class="op">$</span><span class="va">Deceased</span> <span class="op">&lt;-</span> <span class="va">metabric</span><span class="op">$</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"DECEASED"</span>
 <span class="co">#</span>
@@ -351,7 +305,7 @@ data set so we’ll create one from the binary
 <span class="va">deceased</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Deceased</span><span class="op">)</span>
 <span class="co">#</span>
 <span class="co"># only display those columns we're interested in</span>
-<span class="va">deceased</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Patient_ID"</span>, <span class="st">"Survival_status"</span>, <span class="st">"Vital_status"</span>, <span class="st">"Deceased"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">deceased</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_status</span>, <span class="va">Vital_status</span>, <span class="va">Deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,103 × 4</span></span>
 <span class="co">##    Patient_ID Survival_status Vital_status         Deceased</span>
 <span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   </span>
@@ -368,7 +322,7 @@ data set so we’ll create one from the binary
 <span class="co">## <span style="color: #949494;"># … with 1,093 more rows</span></span></code></pre>
 <p>We can use the <strong><code>!</code></strong> operator to filter
 those patients who are not deceased.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="op">!</span><span class="va">Deceased</span><span class="op">)</span></code></pre></div>
 <p>The eagle-eyed will have spotted that filtering on our newly created
 Deceased logical variable gave a slightly different number of
@@ -378,9 +332,10 @@ the filtering operations shown above based on the
 because we have a missing value for the vital status of one of the
 patients. We can filter for this using the
 <strong><code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code></strong> function.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">missing_vital_status</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Vital_status</span><span class="op">)</span><span class="op">)</span>
-<span class="va">missing_vital_status</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Patient_ID"</span>, <span class="st">"Survival_status"</span>, <span class="st">"Vital_status"</span>, <span class="st">"Deceased"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">missing_vital_status</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_status</span>, <span class="va">Vital_status</span>, <span class="va">Deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="co">##   Patient_ID Survival_status Vital_status Deceased</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   </span>
@@ -391,7 +346,7 @@ are filtered out.</p>
 <p>We can apply more than one condition in our filtering operation, for
 example the patients who were still alive at the time of the METABRIC
 study and had survived for more than 10 years (120 months).</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span>, <span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 545 × 33</span></span>
 <span class="co">##    Patient_ID Cohort Age_at_diagnosis Survival_time Survival_status Vital_status</span>
@@ -413,17 +368,11 @@ study and had survived for more than 10 years (120 months).</p>
 <span class="co">## <span style="color: #949494;">#   PR_status &lt;chr&gt;, HER2_status &lt;chr&gt;, HER2_status_measured_by_SNP6 &lt;chr&gt;,</span></span>
 <span class="co">## <span style="color: #949494;">#   PAM50 &lt;chr&gt;, `3-gene_classifier` &lt;chr&gt;, Nottingham_prognostic_index &lt;dbl&gt;,</span></span>
 <span class="co">## <span style="color: #949494;">#   Cellularity &lt;chr&gt;, Integrative_cluster &lt;chr&gt;, Mutation_count &lt;dbl&gt;, …</span></span></code></pre>
-<p>The equivalent using R’s usual subsetting is slightly less
-readable.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">metabric</span><span class="op">[</span><span class="va">metabric</span><span class="op">$</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span> <span class="op">&amp;</span> <span class="va">metabric</span><span class="op">$</span><span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span>, <span class="op">]</span></code></pre></div>
 <p>We can add as many conditions as we like separating each with a
-comma. Note that filtering using R subsetting gets more unreadable, and
-more cumbersome to code, the more conditions you add.</p>
-<p>Adding conditions in this way is equivalent to combining the
+comma. Adding conditions in this way is equivalent to combining the
 conditions using the <strong><code>&amp;</code></strong> (Boolean AND)
 operator.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span>, <span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span>
 <span class="co"># is equivalent to</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span> <span class="op">&amp;</span> <span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span></code></pre></div>
@@ -433,7 +382,7 @@ we can build up more complicated filtering operations using both
 <code>&amp;</code> and <code>|</code>. For example, let’s see which
 patients have stage 3 or stage 4 tumours that are either estrogen
 receptor (ER) positive or progesterone receptor (PR) positive.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">selected_patients</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Tumour_stage</span> <span class="op">&gt;=</span> <span class="fl">3</span>, <span class="va">ER_status</span> <span class="op">==</span> <span class="st">"Positive"</span> <span class="op">|</span> <span class="va">PR_status</span> <span class="op">==</span> <span class="st">"Positive"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">selected_patients</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 79</span></code></pre>
@@ -441,7 +390,7 @@ receptor (ER) positive or progesterone receptor (PR) positive.</p>
 you’d need to be careful about the precedence of the <code>&amp;</code>
 and <code>|</code> operators and use parentheses to make clear what you
 intended.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Tumour_stage</span> <span class="op">&gt;=</span> <span class="fl">3</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">ER_status</span> <span class="op">==</span> <span class="st">"Positive"</span> <span class="op">|</span> <span class="va">PR_status</span> <span class="op">==</span> <span class="st">"Positive"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <hr>
 </div>
@@ -456,32 +405,11 @@ the METABRIC data frame it is not possible to display all the columns;
 we only get the first few and then a long list of the additional ones
 that weren’t displayed.</p>
 <p>Using the <code>$</code> operator is quite convenient for selecting a
-single column and extracting the values as a vector. Selecting several
-columns using the <code>[]</code> subsetting operator is a bit more
-cumbersome. For example, in our look at filtering rows, we considered
-two different variables in our data set that are concerned with the
-living/deceased status of patients. When printing out the results we
-selected just those columns along with the patient identifier and the
-newly created <code>Deceased</code> column.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">deceased</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Patient_ID"</span>, <span class="st">"Survival_status"</span>, <span class="st">"Vital_status"</span>, <span class="st">"Deceased"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,103 × 4</span></span>
-<span class="co">##    Patient_ID Survival_status Vital_status         Deceased</span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> MB-0005    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> MB-0008    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> MB-0010    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> MB-0022    DECEASED        Died of Other Causes TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> MB-0028    DECEASED        Died of Other Causes TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> MB-0035    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> MB-0036    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> MB-0046    DECEASED        Died of Other Causes TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> MB-0079    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> MB-0083    DECEASED        Died of Disease      TRUE    </span>
-<span class="co">## <span style="color: #949494;"># … with 1,093 more rows</span></span></code></pre>
-<p>The <strong><code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code></strong> function from dplyr is
-simpler.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+single column and extracting the values as a vector. However, for
+selecting multiple columns, the <strong><code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code></strong>
+function from dplyr is simpler. We have already seen it a little when we
+used it above to view just a few columns in the dataset.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_status</span>, <span class="va">Vital_status</span>, <span class="va">Deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 4</span></span>
 <span class="co">##    Patient_ID Survival_status Vital_status         Deceased</span>
@@ -504,7 +432,7 @@ the variables (columns) to select. Note that the variables do not need
 to be put in quotes, and the returned value is another data frame, even
 if only one column was selected.</p>
 <p>We can alter the order of the variables (columns).</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, <span class="va">Vital_status</span>, <span class="va">Survival_status</span>, <span class="va">Deceased</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 4</span></span>
 <span class="co">##    Patient_ID Vital_status         Survival_status Deceased</span>
@@ -525,7 +453,7 @@ if only one column was selected.</p>
 and all the columns between <code>Tumour_size</code> and
 <code>Cancer_type</code> we could run the following
 <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> command.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, <span class="va">Chemotherapy</span><span class="op">:</span><span class="va">Tumour_stage</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 5</span></span>
 <span class="co">##    Patient_ID Chemotherapy Radiotherapy Tumour_size Tumour_stage</span>
@@ -545,7 +473,7 @@ and all the columns between <code>Tumour_size</code> and
 functions that can be used within <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>. We can find all
 the columns, for example, that contain the term “status” using
 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"status"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 7</span></span>
 <span class="co">##    Survival_status Vital_status Lymph_node_stat… ER_status PR_status HER2_status</span>
@@ -564,7 +492,7 @@ the columns, for example, that contain the term “status” using
 <span class="co">## <span style="color: #949494;">#   HER2_status_measured_by_SNP6 &lt;chr&gt;</span></span></code></pre>
 <p>If we only wanted those ending with “status” we could use
 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> instead.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"status"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 6</span></span>
 <span class="co">##    Survival_status Vital_status Lymph_node_stat… ER_status PR_status HER2_status</span>
@@ -583,7 +511,7 @@ the columns, for example, that contain the term “status” using
 <p>We can also select those columns we’re not interested in and that
 shouldn’t be included by prefixing the columns with
 <strong><code>-</code></strong>.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="op">-</span><span class="va">Cohort</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 32</span></span>
 <span class="co">##    Patient_ID Age_at_diagnosis Survival_time Survival_status Vital_status       </span>
@@ -607,7 +535,7 @@ shouldn’t be included by prefixing the columns with
 <span class="co">## <span style="color: #949494;">#   Cellularity &lt;chr&gt;, Integrative_cluster &lt;chr&gt;, Mutation_count &lt;dbl&gt;, …</span></span></code></pre>
 <p>You can use a combination of explicit naming, ranges, helper
 functions and negation to select the columns of interest.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">selected_columns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"Tumour_"</span><span class="op">)</span>, <span class="va">`3-gene_classifier`</span><span class="op">:</span><span class="va">Integrative_cluster</span>, <span class="op">-</span><span class="va">Cellularity</span><span class="op">)</span>
 <span class="va">selected_columns</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 6</span></span>
@@ -630,7 +558,7 @@ columns so they’re in the order of your choosing. The
 particularly if what you’re really interested in is bringing one or more
 columns to the left hand side and then including everything else
 afterwards in whatever order they were already in.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_status</span>, <span class="va">Tumour_stage</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 33</span></span>
 <span class="co">##    Patient_ID Survival_status Tumour_stage Cohort Age_at_diagnosis Survival_time</span>
@@ -653,7 +581,7 @@ afterwards in whatever order they were already in.</p>
 <span class="co">## <span style="color: #949494;">#   PAM50 &lt;chr&gt;, `3-gene_classifier` &lt;chr&gt;, Nottingham_prognostic_index &lt;dbl&gt;,</span></span>
 <span class="co">## <span style="color: #949494;">#   Cellularity &lt;chr&gt;, Integrative_cluster &lt;chr&gt;, Mutation_count &lt;dbl&gt;, …</span></span></code></pre>
 <p>Finally, columns can be renamed as part of the selection process.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Patient_ID</span>, Classification <span class="op">=</span> <span class="va">`3-gene_classifier`</span>, NPI <span class="op">=</span> <span class="va">Nottingham_prognostic_index</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 3</span></span>
 <span class="co">##    Patient_ID Classification          NPI</span>
@@ -683,7 +611,7 @@ months). We use <code><a href="https://dplyr.tidyverse.org/reference/filter.html
 to the patients meeting these criteria and can then use
 <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> to only display the variables (columns) we’re most
 interested in.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span>, <span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span>
 <span class="va">patient_details_of_interest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">patients_of_interest</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_time</span>, <span class="va">Tumour_stage</span>, <span class="va">Nottingham_prognostic_index</span><span class="op">)</span>
 <span class="va">patient_details_of_interest</span></code></pre></div>
@@ -707,21 +635,20 @@ to the final result. We could just have used the same name to avoid
 cluttering our environment and overwritten the results from the
 <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> operation with those of the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>
 operation.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">patients_of_interest</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_time</span>, <span class="va">Tumour_stage</span>, <span class="va">Nottingham_prognostic_index</span><span class="op">)</span></code></pre></div>
 <p>Another less readable way of writing this code is to nest the
 <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> function call inside the <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code>.
 Although this looks very unwieldy and is not easy to follow, nested
 function calls are very common in a lot of R code you may come
 across.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span>, <span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span>, <span class="va">Patient_ID</span>, <span class="va">Survival_time</span>, <span class="va">Tumour_stage</span>, <span class="va">Nottingham_prognostic_index</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">patients_of_interest</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 545</span></code></pre>
 <p>However, there is another way chaining together a series of
 operations into a mini workflow that is elegant, intuitive and makes for
-very readable R code. For that we need to introduce a new operator, the
-<strong>pipe</strong> operator,
+very readable R code. We can use the <strong>pipe</strong> operator,
 <strong><code>%&gt;%</code></strong>.</p>
 <div class="rmdblock">
 <p>
@@ -774,7 +701,7 @@ pipe <code>|&gt;</code>.
 </div>
 <p>We can rewrite the code for our filtering and column selection
 operations as follows.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span>, <span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Patient_ID</span>, <span class="va">Survival_time</span>, <span class="va">Tumour_stage</span>, <span class="va">Nottingham_prognostic_index</span><span class="op">)</span></code></pre></div>
@@ -791,11 +718,11 @@ transforming a data set.</p>
 a time, testing the output produced at each stage. Let’s do that for
 this case.</p>
 <p>We start by considering just the patients who are living.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span><span class="op">)</span></code></pre></div>
 <p>We then add another filter for the survival time.</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span></code></pre></div>
@@ -804,7 +731,7 @@ this case.</p>
 the result.</p>
 <p>Finally we only want certain columns, so we add a
 <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> operation.</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -831,13 +758,13 @@ we try to place this at the start of the next line, R will think we’ve
 finished the workflow prematurely and will report an error at what it
 considers the next statement, i.e. the line that begins with
 <code>%&gt;%</code>.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R considers the following to be 2 separate commands, the first of which ends</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with the first filter operation and runs successfully.</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The second statement is the third and last line, is not a valid commmand and</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># so you'll get an error message</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>patients_of_interest <span class="ot">&lt;-</span> metabric <span class="sc">%&gt;%</span></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Survival_status <span class="sc">==</span> <span class="st">"LIVING"</span>)</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Survival_time <span class="sc">&gt;</span> <span class="dv">120</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># R considers the following to be 2 separate commands, the first of which ends</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with the first filter operation and runs successfully.</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The second statement is the third and last line, is not a valid commmand and</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co"># so you'll get an error message</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>patients_of_interest <span class="ot">&lt;-</span> metabric <span class="sc">%&gt;%</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Survival_status <span class="sc">==</span> <span class="st">"LIVING"</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Survival_time <span class="sc">&gt;</span> <span class="dv">120</span>)</span></code></pre></div>
 <p>This is very similar to what we saw with adding layers and other
 components to a ggplot using the <code>+</code> operator, where we
 needed the <code>+</code> to be at the end of a line.</p>
@@ -855,7 +782,7 @@ contents or saving them to a file. The <code><a href="https://dplyr.tidyverse.or
 in dplyr provides this sorting capability.</p>
 <p>For example, we can sort the METABRIC patients into order of
 increasing survival time.</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Survival_time</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 33</span></span>
 <span class="co">##    Patient_ID Cohort Age_at_diagnosis Survival_time Survival_status Vital_status</span>
@@ -881,7 +808,7 @@ increasing survival time.</p>
 longest so would need the order to be of decreasing survival time. For
 that we can use the helper function <code><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc()</a></code> that works
 specifically with <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code>.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">Survival_time</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 33</span></span>
 <span class="co">##    Patient_ID Cohort Age_at_diagnosis Survival_time Survival_status Vital_status</span>
@@ -907,7 +834,7 @@ specifically with <code><a href="https://dplyr.tidyverse.org/reference/arrange.h
 key dplyr ‘verbs’, <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code> works rather well in workflows
 in which successive operations are chained using
 <code>%&gt;%</code>.</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">patients_of_interest</span> <span class="op">&lt;-</span> <span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"LIVING"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Survival_time</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -931,7 +858,7 @@ in which successive operations are chained using
 <span class="co">## <span style="color: #949494;"># … with 535 more rows</span></span></code></pre>
 <p>We can sort by more than one variable by adding more variable
 arguments to <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code>.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">patients_of_interest</span>, <span class="va">Tumour_stage</span>, <span class="va">Nottingham_prognostic_index</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 545 × 4</span></span>
 <span class="co">##    Patient_ID Survival_time Tumour_stage Nottingham_prognostic_index</span>
@@ -960,13 +887,13 @@ before printing out a data frame or writing out the table to a file.</p>
 <p>In one of the examples of filtering observations using
 <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> above, we created a new logical variable called
 <code>Deceased</code>.</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span><span class="op">$</span><span class="va">Deceased</span> <span class="op">&lt;-</span> <span class="va">metabric</span><span class="op">$</span><span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"DECEASED"</span></code></pre></div>
 <p>This is an example of a rather common type of data manipulation in
 which we create a new column based on the values contained in one or
 more other columns. The <code>dplyr</code> package provides the
 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> function for this purpose.</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">metabric</span>, Deceased <span class="op">=</span> <span class="va">Survival_status</span> <span class="op">==</span> <span class="st">"DECEASED"</span><span class="op">)</span></code></pre></div>
 <p>Both of these methods add the new column to the end.</p>
 <p>Note that variables names in the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> function call
@@ -977,7 +904,7 @@ want to change the units. For example, our tumour size values are in
 millimetres but the formula for the Nottingham prognostic index needs
 the tumour size to be in centimetres. We can convert to
 <code>Tumour_size</code> to centimetres by dividing by 10.</p>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">metabric</span>, Tumour_size <span class="op">=</span> <span class="va">Tumour_size</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
 <div class="rmdblock">
 <p>
@@ -1015,8 +942,9 @@ Grade III = 3)
 <p>We’ll recalculate the Nottingham prognostic index using the values
 <code>Tumour_size</code>, <code>Neoplasm_histologic_grade</code> and
 <code>Lymph_node_status</code> columns in our METABRIC data frame.</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">metabric</span>, NPI <span class="op">=</span> <span class="fl">0.2</span> <span class="op">*</span> <span class="va">Tumour_size</span> <span class="op">+</span> <span class="va">Lymph_node_status</span> <span class="op">+</span> <span class="va">Neoplasm_histologic_grade</span><span class="op">)</span>
+
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="va">Tumour_size</span>, <span class="va">Lymph_node_status</span>, <span class="va">Neoplasm_histologic_grade</span>, <span class="va">NPI</span>, <span class="va">Nottingham_prognostic_index</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1,904 × 5</span></span>
 <span class="co">##    Tumour_size Lymph_node_status Neoplasm_histologic_gra…   NPI Nottingham_prog…</span>
@@ -1039,7 +967,7 @@ factor for tumour size was used. This could explain why the plots we
 created in weeks 1 and 2 featuring the Nottingham prognostic index
 looked so odd. We’ll see if they look any better with our recalculated
 values.</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Age_at_diagnosis</span>, y <span class="op">=</span> <span class="va">NPI</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="week3_files/figure-html/scatter_plot_1-1.png" width="700"></p>
@@ -1052,7 +980,7 @@ We’ll read in the METABRIC data again and create a small workflow that
 carries out the tumour size conversion, computes the NPI, rounds the
 tumour size and the resulting NPI value to 1 decimal place and displays
 the results in decreasing order of NPI.</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"https://zenodo.org/record/6450144/files/metabric_clinical_and_expression_data.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tumour_size <span class="op">=</span> <span class="va">Tumour_size</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>NPI <span class="op">=</span> <span class="fl">0.2</span> <span class="op">*</span> <span class="va">Tumour_size</span> <span class="op">+</span> <span class="va">Lymph_node_status</span> <span class="op">+</span> <span class="va">Neoplasm_histologic_grade</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
@@ -1083,7 +1011,7 @@ just the one <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" c
 <code>Tumour_size</code> and <code>NPI</code> columns and we can using
 <strong><code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code></strong> inside <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code>.
 This allows us to apply a function across multiple columns.</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">Tumour_size</span>, <span class="va">NPI</span><span class="op">)</span>, <span class="va">round</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Patient_ID</span>, <span class="va">Tumour_size</span>, <span class="va">NPI</span><span class="op">)</span></code></pre></div>
@@ -1111,7 +1039,7 @@ for selecting columns using <code><a href="https://dplyr.tidyverse.org/reference
 <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code>.</p>
 <p>For example, we might decide that our expression values are given to
 a much higher degree of precision than is strictly necessary.</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">ESR1</span><span class="op">:</span><span class="va">MLPH</span>, <span class="va">round</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Patient_ID</span>, <span class="va">ESR1</span><span class="op">:</span><span class="va">MLPH</span><span class="op">)</span></code></pre></div>
@@ -1132,7 +1060,7 @@ a much higher degree of precision than is strictly necessary.</p>
 <p>Or we could decide that all the columns whose names end with
 “_status” are in fact categorical variables and should be converted to
 factors.</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">metabric</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"_status"</span><span class="op">)</span>, <span class="va">as.factor</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Patient_ID</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"_status"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1152,7 +1080,7 @@ factors.</p>
 <span class="co">## <span style="color: #949494;"># … with 1,894 more rows, and 1 more variable: HER2_status &lt;fct&gt;</span></span></code></pre>
 </div>
 <div class="section level3">
-<h3 id="anonymous-functions">Anonymous functions<a class="anchor" aria-label="anchor" href="#anonymous-functions"></a>
+<h3 id="anonymous-functions-advanced">Anonymous functions (ADVANCED)<a class="anchor" aria-label="anchor" href="#anonymous-functions-advanced"></a>
 </h3>
 <p>The <code>mutate</code> function with <code>across</code> is really
 very powerful but with that comes additional complexity.</p>
@@ -1169,7 +1097,7 @@ create one just for this conversion so we’ll use an anonymous function
 instead – anonymous because it has no name, it’s an <em>in situ</em>
 function only used in our <code>mutate</code> with <code>across</code>
 function call.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">Sepal.Length</span><span class="op">:</span><span class="va">Petal.Width</span>, <span class="op">~</span> <span class="va">.</span> <span class="op">*</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1215,11 +1143,11 @@ be used with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html
 <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> function calculates the arithmetic mean of a numeric
 vector. Let’s calculate the average ESR1 expression for tumour samples
 in the METABRIC data set.</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">metabric</span><span class="op">$</span><span class="va">ESR1</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## [1] 9.607824</span></code></pre>
 <p>The equivalent operation using <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> is:</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">ESR1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 1</span></span>
 <span class="co">##   `mean(ESR1)`</span>
@@ -1236,7 +1164,7 @@ which there is a single row and a single column.</p>
 <p>Returning a data frame might be quite useful, particularly if we’re
 summarising multiple columns or using more than one function, for
 example computing the average and standard deviation.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, ESR1_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">ESR1</span><span class="op">)</span>, ESR1_sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">ESR1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="co">##   ESR1_mean ESR1_sd</span>
@@ -1291,7 +1219,7 @@ column.
 <p>It is also possible to summarise using a function that takes more
 than one value, i.e. from multiple columns. For example, we could
 compute the correlation between the expression of FOXA1 and MLPH.</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, correlation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">FOXA1</span>, <span class="va">MLPH</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 1</span></span>
 <span class="co">##   correlation</span>
@@ -1308,13 +1236,13 @@ to apply, followed by the function name. Selecting the columns is done
 in the same way as for <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> with <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code>,
 whatever works for <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> e.g.<code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>,
 <code>:</code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>.</p>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">FOXA1</span>, <span class="va">MLPH</span><span class="op">)</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span>
 <span class="co">##   FOXA1  MLPH</span>
 <span class="co">##   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="co">## <span style="color: #BCBCBC;">1</span>  10.8  11.4</span></code></pre>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="va">ESR1</span><span class="op">:</span><span class="va">MLPH</span>, <span class="va">mean</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 8</span></span>
 <span class="co">##    ESR1 ERBB2   PGR  TP53 PIK3CA GATA3 FOXA1  MLPH</span>
@@ -1326,7 +1254,7 @@ summary function. For example, what happens if we try to compute an
 average of a set of character values?</p>
 <p>Note we can use <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> if we want to use across
 with all columns.</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## Warning in mean.default(col, ...): argument is not numeric or logical: returning</span>
 <span class="co">## NA</span>
@@ -1385,7 +1313,7 @@ columns for which computing an average does not make sense.</p>
 <p><strong><code>where()</code></strong> can be used to select those
 values for which a summarization function is appropriate, for example,
 where the column is of type numeric.</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">mean</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 19</span></span>
 <span class="co">##   Cohort Age_at_diagnosis Survival_time Tumour_size Tumour_stage</span>
@@ -1398,7 +1326,7 @@ where the column is of type numeric.</p>
 <span class="co">## <span style="color: #949494;">#   MLPH &lt;dbl&gt;, NPI &lt;dbl&gt;</span></span></code></pre>
 <p>It is possible to summarise using more than one function in which
 case a list of functions needs to be provided.</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ESR1</span>, <span class="va">ERBB2</span>, <span class="va">PGR</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">mean</span>, <span class="va">sd</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 6</span></span>
 <span class="co">##   ESR1_1 ESR1_2 ERBB2_1 ERBB2_2 PGR_1 PGR_2</span>
@@ -1406,7 +1334,7 @@ case a list of functions needs to be provided.</p>
 <span class="co">## <span style="color: #BCBCBC;">1</span>   9.61   2.13    10.8    1.36  6.24  1.02</span></code></pre>
 <p>Pretty neat but I’m not sure about those column headings in the
 output – fortunately we have some control over these.</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ESR1</span>, <span class="va">ERBB2</span>, <span class="va">PGR</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>average <span class="op">=</span> <span class="va">mean</span>, stdev <span class="op">=</span> <span class="va">sd</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 6</span></span>
 <span class="co">##   ESR1_average ESR1_stdev ERBB2_average ERBB2_stdev PGR_average PGR_stdev</span>
@@ -1414,7 +1342,7 @@ output – fortunately we have some control over these.</p>
 <span class="co">## <span style="color: #BCBCBC;">1</span>         9.61       2.13          10.8        1.36        6.24      1.02</span></code></pre>
 </div>
 <div class="section level3">
-<h3 id="anonymous-functions-1">Anonymous functions<a class="anchor" aria-label="anchor" href="#anonymous-functions-1"></a>
+<h3 id="anonymous-functions-advanced-1">Anonymous functions (ADVANCED)<a class="anchor" aria-label="anchor" href="#anonymous-functions-advanced-1"></a>
 </h3>
 <p>The <code>mutate</code> and <code>summarise</code> functions with
 <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across()</a></code> work in a very similar manner, very much in line
@@ -1426,7 +1354,7 @@ the assignment from last week, we asked you to compute the correlation
 of the expression for FOXA1 against all other genes to see which was
 most strongly correlated. Here is how we could do this in a single
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> statement using an anonymous function.</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">metabric</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ESR1</span><span class="op">:</span><span class="va">MLPH</span>, <span class="op">-</span><span class="va">FOXA1</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">FOXA1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 7</span></span>
 <span class="co">##    ESR1 ERBB2   PGR    TP53 PIK3CA GATA3  MLPH</span>
@@ -1454,13 +1382,13 @@ displays a subset of the data.</p>
 we’re displaying the PR positive and PR negative patients using
 different colours. This is a very similar to a plot we created last
 session</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">PR_status</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
 <p><img src="week3_files/figure-html/scatter_plot_2-1.png" width="700"></p>
 <p>An alternative is to use faceting with
 <strong><code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap()</a></code></strong>.</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">PR_status</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1472,7 +1400,7 @@ each for the category.</p>
 <code><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars()</a></code>.</p>
 <p>We can still use separate colours if we prefer things to be, well,
 colourful.</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">PR_status</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">PR_status</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1482,7 +1410,7 @@ colours when there are more than two or three groups when it can be
 difficult to really tell which points belong to each group. A case in
 point is for the 3-gene classification in the GATA3 vs ESR1 scatter plot
 we created last week. Let’s create a faceted version of that plot.</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">`3-gene_classifier`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">`3-gene_classifier`</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1492,12 +1420,12 @@ we created last week. Let’s create a faceted version of that plot.</p>
 the page, it wraps around to another row. We can control how many rows
 or columns to use with the <code>nrow</code> and <code>ncol</code>
 arguments.</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">`3-gene_classifier`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">`3-gene_classifier`</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="week3_files/figure-html/scatter_plot_6-1.png" width="700"></p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">`3-gene_classifier`</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">`3-gene_classifier`</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
@@ -1505,13 +1433,13 @@ arguments.</p>
 <p>We can combine faceting on one variable with a colour aesthetic for
 another variable. For example, let’s show the tumour stage status using
 faceting and the HER2 status using colours.</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">HER2_status</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">Neoplasm_histologic_grade</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="week3_files/figure-html/scatter_plot_8-1.png" width="700"></p>
 <p>Instead of this we could facet on more than variable.</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">Neoplasm_histologic_grade</span>, <span class="va">HER2_status</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1519,14 +1447,14 @@ faceting and the HER2 status using colours.</p>
 <p>Faceting on two variables is usually better done using the other
 faceting function, <strong><code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid()</a></code></strong>. Note the
 change in how the formula is written.</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">Neoplasm_histologic_grade</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">HER2_status</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="week3_files/figure-html/scatter_plot_10-1.png" width="700"></p>
 <p>Again we can use colour aesthetics alongside faceting to add further
 information to our visualization.</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">PAM50</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">Neoplasm_histologic_grade</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/vars.html" class="external-link">vars</a></span><span class="op">(</span><span class="va">HER2_status</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1534,7 +1462,7 @@ information to our visualization.</p>
 <p>Finally, we can use a <code>labeller</code> to change the labels for
 each of the categorical values so that these are more meaningful in the
 context of this plot.</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">grade_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1"</span> <span class="op">=</span> <span class="st">"Grade I"</span>, <span class="st">"2"</span> <span class="op">=</span> <span class="st">"Grade II"</span>, <span class="st">"3"</span> <span class="op">=</span> <span class="st">"Grade III"</span><span class="op">)</span>
 <span class="va">her2_status_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Positive"</span> <span class="op">=</span> <span class="st">"HER2 positive"</span>, <span class="st">"Negative"</span> <span class="op">=</span> <span class="st">"HER2 negative"</span><span class="op">)</span>
 <span class="co">#</span>
@@ -1550,7 +1478,7 @@ context of this plot.</p>
 <p><img src="week3_files/figure-html/scatter_plot_12-1.png" width="700"></p>
 <p>This would certainly be necessary if we were to use ER and HER2
 status on one side of the grid.</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">er_status_labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Positive"</span> <span class="op">=</span> <span class="st">"ER positive"</span>, <span class="st">"Negative"</span> <span class="op">=</span> <span class="st">"ER negative"</span><span class="op">)</span>
 <span class="co">#</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">metabric</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">GATA3</span>, y <span class="op">=</span> <span class="va">ESR1</span>, colour <span class="op">=</span> <span class="va">PAM50</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -1569,7 +1497,7 @@ status on one side of the grid.</p>
 <div class="section level2">
 <h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
 </h2>
-<p>In this session we have covered the following concepts:</p>
+<p>In this session we have reviewed the following concepts:</p>
 <ul>
 <li>Filtering rows in a data frame based on their values</li>
 <li>Selecting and reordering of columns</li>
